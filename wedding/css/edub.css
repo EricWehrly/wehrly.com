@@ -79,10 +79,14 @@ div.wedding-party > *:nth-child(odd) {
   }
 }
 
-#our-story pre, #lodging p {
+#our-story pre, #lodging p, #our-story p {
   max-width: 100%;
   text-wrap: pretty;
   margin-left: 1em;
+}
+
+#our-story pre, #our-story p {
+  max-width:660px
 }
 
 #lodging p {
