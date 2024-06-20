@@ -1,6 +1,6 @@
 FROM httpd:alpine
 
-EXPOSE 8080
+EXPOSE 80
 
 WORKDIR /usr/local/apache2/htdocs/
 
