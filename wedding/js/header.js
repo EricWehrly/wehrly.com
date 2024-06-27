@@ -2,7 +2,6 @@ const urlSegments = window.location.pathname.split('/');
 const lastSegment = urlSegments[urlSegments.length - 1];
 
 function buildNavItems() {
-    console.log(window.location.pathname)
     fetch('menu.json')
         .then(response => response.json())
         .then(links => {            
