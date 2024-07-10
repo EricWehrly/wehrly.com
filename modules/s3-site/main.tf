@@ -14,6 +14,15 @@ variable "filedir" {
   default = "empty"
 }
 
+variable certificate_arn {
+  type = string
+}
+
+variable "configure_www" {
+  type = bool
+  default = false
+}
+
 provider "aws" {
   region = "${var.aws_region}"
 }
@@ -63,12 +72,13 @@ resource "aws_route53_record" "root_domain" {
 }
 
 resource "aws_route53_record" "www_domain" {
+  count = var.configure_www ? 1 : 0
   zone_id = "${aws_route53_zone.main.zone_id}"
   name = "www.${var.domain}"
   type = "CNAME"
 
   alias {
-    name = "www.${aws_cloudfront_distribution.cdn.domain_name}"
+    name = "${aws_cloudfront_distribution.cdn.domain_name}"
     zone_id = "${aws_cloudfront_distribution.cdn.hosted_zone_id}"
     evaluate_target_health = false
   }
@@ -81,7 +91,10 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   # If using route53 aliases for DNS we need to declare it here too, otherwise we'll get 403s.
-  aliases = ["${var.domain}"]
+  # aliases = ["${var.domain}", "www.${var.domain}"]
+  # If using route53 aliases for DNS we need to declare it here too, otherwise we'll get 403s.
+  # add a www site to the allowed list for the cdn, unless it already is a www site
+  aliases = var.configure_www ? [var.domain, "www.${var.domain}"] : [var.domain]
 
   enabled             = true
   default_root_object = "index.html"
@@ -116,9 +129,10 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = "arn:aws:acm:us-east-1:428933486948:certificate/1f1c2305-429b-4889-8b08-77ce681f18b1"
-    ssl_support_method = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2021"
+    acm_certificate_arn            = var.certificate_arn != "" ? var.certificate_arn : null
+    ssl_support_method             = "sni-only"
+    minimum_protocol_version       = "TLSv1.2_2021"
+    cloudfront_default_certificate = var.certificate_arn != "" ? false : true
   }
 }
 
