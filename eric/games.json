@@ -2,11 +2,13 @@
     {
         "name": "Not Exactly Sudoku",
         "repo": "https://github.com/EricWehrly/Sudoku",
+        "play": "https://ericwehrly.github.io/Sudoku/",
         "description": "I tried to rewrite Sudoku to be remixed like Balatro did for poker. I wound up kind of making Sudoku where you could maybe do weird stuff. The through line for an alternative experience unfortunately never really hit."
     },
     {
         "name": "Bad Actor",
         "repo": "https://github.com/EricWehrly/BadActor-Blazer",
+        "play": "https://ericwehrly.github.io/BadActor-Blazer/",
         "description": "A game about writing viruses and building a bot farm. Part Cookie Clicker, part Uplink. Ultimately definitely unfinished. Currently, it's in a pre-release version of Blazer and should be upgraded to take advantage of current WebAssembly, and not be a complete pain when developing."
     },
     {

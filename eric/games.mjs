@@ -1,4 +1,19 @@
-// Fetch the JSON file
+function makeLink(href, className) {
+    const link = document.createElement('a');
+    link.className = `icon ${className}`;
+    link.href = href;
+    link.target = "_blank";
+    return link;
+}
+
+function playLink(gameData) {
+    return makeLink(gameData.play, "play");
+}
+
+function githubLink(gameData) {
+    return makeLink(gameData.repo, "github");
+}
+
 fetch('games.json')
     .then(response => response.json())
     .then(data => {
@@ -12,14 +27,27 @@ fetch('games.json')
             const gameElement = document.createElement('div');
             gameElement.classList.add('pinned-item');
             
-            const title = document.createElement('a');
-            title.className = "link";
-            title.textContent = gameData.name;
-            title.href = gameData.repo;
-            title.target = "_blank";
+            const title = document.createElement('h3');
+            const titleAnchor = document.createElement('a');
+            titleAnchor.className = "link";
+            titleAnchor.textContent = gameData.name;
+            titleAnchor.href = gameData.repo;
+            titleAnchor.target = "_blank";
+
+            if(gameData.play) {
+                const link = playLink(gameData);
+                gameElement.appendChild(link);
+            }
+
+            if(gameData.repo) {
+                const link = githubLink(gameData);                
+                gameElement.appendChild(link);
+            }
+
             const description = document.createElement('p');
             description.textContent = gameData.description;
 
+            title.appendChild(titleAnchor);
             gameElement.appendChild(title);
             gameElement.appendChild(description);
 

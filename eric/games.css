@@ -25,6 +25,7 @@ body > .content {
     background-color: #161B22;
     padding: 20px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .pinned-item h3 {
@@ -37,10 +38,38 @@ body > .content {
     color: #8B949E;
 }
 
-.pinned-item > .link {
+.pinned-item > h3 > .link {
     text-decoration: none;
+}
+
+.pinned-item .icon {
+    background-size: 100%;
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    position: absolute;
+}
+
+.pinned-item .icon.github {
+    background-image: url('img/github-mark-white.svg');
+    left: 1em;
+}
+
+.pinned-item .icon.play {
+    background-image: url('img/play.svg');
+    filter: invert(1);
+    right: 1em;
 }
 
 .link {
     color: var(--fgColor-accent);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .pinned-section {
+        grid-template-columns: 1fr;
+        width: 96%;
+        gap: 8px;
+    }    
 }
