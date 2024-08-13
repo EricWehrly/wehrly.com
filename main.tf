@@ -37,8 +37,5 @@ module "wedding-site" {
 }
 
 module "lookbook-site" {
-  source = "./modules/s3-site"
-  domain = "lookbook.wehrly.com"
-
-  certificate_arn = ""
+  source = "./modules/dummy"
 }
